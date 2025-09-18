@@ -66,9 +66,32 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
+// Define auton_names array with names of autonomous routines
+
+
 void autonomous() {
 	left_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	right_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	
+	const char* auton_names[] = {
+	"Auton 1",
+	"Auton 2",
+	"Auton 3"
+	// Add more names as needed
+	};
+
+	// Array of function pointers
+	void (*autons[])() = {}; // put autonomous functions here
+
+	// calls auton selector function
+	// auton_count is automatically inputted by dividing memory size of the array by the size of a single function pointer
+	int auton_index = get_auton_selector(sizeof(autons) / sizeof(autons[0])); 
+
+	// Print name of the selected auton
+	pros::lcd::print(0, "Selected: %s", auton_names[auton_index]);
+
+	// ---- Run the chosen auton ----
+	autons[auton_index]();
 }
 
 /**

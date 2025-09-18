@@ -43,3 +43,6 @@ extern lemlib::ControllerSettings angular_controller;
 
 //create chassis
 extern lemlib::Chassis chassis;
+
+//create potentiometer for autonomous selector
+extern pros::ADIAnalogIn autonomous_selector;

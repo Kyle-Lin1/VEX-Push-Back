@@ -86,3 +86,6 @@ lemlib::Chassis chassis(
                         angular_controller, // angular PID settings
                         odom_sensors // odometry sensors
 );
+
+//create potentiometer for autonomous selector
+pros::ADIAnalogIn autonomous_selector('A');

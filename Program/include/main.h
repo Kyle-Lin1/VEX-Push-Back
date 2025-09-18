@@ -79,6 +79,7 @@ void opcontrol(void);
  #include "subsystemHeaders/autonomousHeaders.hpp"
  #include "subsystemHeaders/drive.hpp"
  #include "subsystemHeaders/globals.hpp"
+ #include "subsystemHeaders/autonomousSelector.hpp"
 
 #endif
 
