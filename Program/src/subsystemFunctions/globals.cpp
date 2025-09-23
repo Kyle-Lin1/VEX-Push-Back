@@ -7,18 +7,22 @@
 
  
 // Drivetrain left motor group
-pros::MotorGroup left_motor_group({ -3, -4, -6 },
+pros::MotorGroup left_motor_group({ -2, -11, -7 }, //motor order: front left, back left, middle left
     pros::MotorGearset::blue);
 // Drivetrain right motor group
-pros::MotorGroup right_motor_group({ 7, 8, 12 }, 
+pros::MotorGroup right_motor_group({9, 19,4 }, //motor order: front right, back right, middle right
     pros::MotorGearset::blue);
 
+//intake motors
+pros::Motor lower_intake_motor(6, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
+
+ 
 //drive train settings
 lemlib::Drivetrain drivetrain(&left_motor_group, // left motor group
                               &right_motor_group, // right motor group
-                              12.5, // 10 inch track width
-                              lemlib::Omniwheel::NEW_275, // new 2.75" omni wheels
-                              450, // drivetrain rpm is 450
+                              10.5, // 10.5 inch track width
+                              lemlib::Omniwheel::NEW_325, // anti-static 3.25" omni wheels
+                              360, // drivetrain rpm is 450
                               2 // horizontal drift is 2 (for now)
                               );
 
@@ -45,12 +49,12 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 pros::Controller partner_controller(pros::E_CONTROLLER_PARTNER);
 
 //input curve for throttle (forward/backward) input during driver control
-extern lemlib::ExpoDriveCurve throttle_curve(3, //set joystick dead zone to avoid drift
+lemlib::ExpoDriveCurve throttle_curve(3, //set joystick dead zone to avoid drift
                                             10, //minimum output 
                                                 1.019 //exponential curve gain
 ); 
-//inout curve for steer (turning) input during driver control
-extern lemlib::ExpoDriveCurve steer_curve(3, //set joystick dead zone to avoid drift
+//input curve for steer (turning) input during driver control
+lemlib::ExpoDriveCurve steer_curve(3, //set joystick dead zone to avoid drift
                                          10, //minimum output 
                                          1.05 //exponential curve gain
 ); 

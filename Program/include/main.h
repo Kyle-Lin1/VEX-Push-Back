@@ -76,10 +76,11 @@ void opcontrol(void);
  */
 //#include <iostream>
 
- #include "subsystemHeaders/autonomousHeaders.hpp"
- #include "subsystemHeaders/drive.hpp"
- #include "subsystemHeaders/globals.hpp"
- #include "subsystemHeaders/autonomousSelector.hpp"
+#include "subsystemHeaders/autonomousHeaders.hpp"
+#include "subsystemHeaders/drive.hpp"
+#include "subsystemHeaders/globals.hpp"
+#include "subsystemHeaders/autonomousSelector.hpp"
+#include "subsystemHeaders/intake.hpp"
 
 #endif
 

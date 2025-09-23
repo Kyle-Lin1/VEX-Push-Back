@@ -73,15 +73,20 @@ void autonomous() {
 	left_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	right_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	
+	// Add names of autonomous routines here
+	// Make sure the order matches the autons array below
 	const char* auton_names[] = {
 	"Auton 1",
 	"Auton 2",
 	"Auton 3"
-	// Add more names as needed
 	};
 
 	// Array of function pointers
-	void (*autons[])() = {}; // put autonomous functions here
+	void (*autons[])() = {// Add autonomous functions here
+		//auton1,
+		//auton2,
+		//auton3
+	}; 
 
 	// calls auton selector function
 	// auton_count is automatically inputted by dividing memory size of the array by the size of a single function pointer
@@ -115,6 +120,7 @@ void opcontrol() {
   	right_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 	while (true) {
 		set_drive(); // set drive controls
+		set_intake();
 		pros::delay(20);                               // Run for 20 ms then update
 	}
 }
