@@ -13,6 +13,7 @@ extern pros::MotorGroup right_motor_group;
 
 //intake motors
 extern pros::Motor lower_intake_motor;
+extern pros::Motor upper_intake_motor;
 
 //drivetrain settings
 extern lemlib::Drivetrain drivetrain;

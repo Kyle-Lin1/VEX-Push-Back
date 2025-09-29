@@ -116,11 +116,10 @@ void opcontrol() {
 	//set brake mode to brake
   	left_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
   	right_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-	left_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-  	right_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+
 	while (true) {
 		set_drive(); // set drive controls
-		set_intake();
-		pros::delay(20);                               // Run for 20 ms then update
+		set_intake(); //set intake controls
+		pros::delay(20);  // 20 second delay to save resources
 	}
 }

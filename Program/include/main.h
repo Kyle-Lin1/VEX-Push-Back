@@ -81,6 +81,7 @@ void opcontrol(void);
 #include "subsystemHeaders/globals.hpp"
 #include "subsystemHeaders/autonomousSelector.hpp"
 #include "subsystemHeaders/intake.hpp"
+#include "subsystemHeaders/ekf.hpp"
 
 #endif
 

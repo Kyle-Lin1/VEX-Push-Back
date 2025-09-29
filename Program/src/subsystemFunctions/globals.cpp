@@ -14,7 +14,8 @@ pros::MotorGroup right_motor_group({9, 19,4 }, //motor order: front right, back 
     pros::MotorGearset::blue);
 
 //intake motors
-pros::Motor lower_intake_motor(6, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
+pros::Motor lower_intake_motor(10, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
+pros::Motor upper_intake_motor(8, pros::v5::MotorGears::rpm_200, pros::v5::MotorUnits::counts);
 
  
 //drive train settings
