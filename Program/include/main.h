@@ -82,6 +82,7 @@ void opcontrol(void);
 #include "subsystemHeaders/autonomousSelector.hpp"
 #include "subsystemHeaders/intake.hpp"
 #include "subsystemHeaders/ekf.hpp"
+#include "subsystemHeaders/scrapper.hpp"
 
 #endif
 

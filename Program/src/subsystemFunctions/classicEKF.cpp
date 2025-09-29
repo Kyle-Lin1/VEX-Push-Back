@@ -1,6 +1,12 @@
 #include "subsystemHeaders/ekf.hpp"
 #include <cmath>
 
+/*
+The following code is for extended kalman filter (EKF) implementation for robot localization.
+It uses the wheels on the drive train (the powered ones) which has slippage
+*/
+
+/*
 // constructors
 EKF::EKF(double wheelRadius, double wheelBase, double dtIn) {
     x = 0;
@@ -97,7 +103,16 @@ void EKF::updateIMU(double imuHeading) {
     // wrap theta again
     if (theta > M_PI) theta -= 2 * M_PI;
     if (theta < -M_PI) theta += 2 * M_PI;
-    
+/*
+    // update covariance: P = (I - K*H) * P
+    std::array<std::array<double, 3>, 3> newP = P;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            newP[i][j] -= K[i] * P[2][j];
+        }
+    }
+    P = newP;
+    *[delete space]/ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     // update covariance: P = (I - K*H) * P
     //the below uses full matrix multiplication for clarity
     double KH[3][3] = {0};
@@ -135,3 +150,6 @@ void EKF::update(double leftDist, double rightDist, double imuHeading) {
 double EKF::getX() const { return x; }
 double EKF::getY() const { return y; }
 double EKF::getTheta() const { return theta; }
+
+
+*/

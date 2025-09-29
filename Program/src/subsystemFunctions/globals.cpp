@@ -17,6 +17,8 @@ pros::MotorGroup right_motor_group({9, 19,4 }, //motor order: front right, back 
 pros::Motor lower_intake_motor(10, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
 pros::Motor upper_intake_motor(8, pros::v5::MotorGears::rpm_200, pros::v5::MotorUnits::counts);
 
+//scarpper pnuematic
+pros::ADIDigitalOut scrapper('H');
  
 //drive train settings
 lemlib::Drivetrain drivetrain(&left_motor_group, // left motor group

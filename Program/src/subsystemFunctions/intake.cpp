@@ -3,6 +3,7 @@
 
 void set_lower_intake(int power){
         //This is for blue motors 
+        //600 rpm motors
         lower_intake_motor.move_velocity(power*4.72440944882); //(percent velocity as decimal)*(range of motor)/(voltage) = (1)(600)/127
 
         lower_intake_motor.move(power);

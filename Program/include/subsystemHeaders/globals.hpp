@@ -15,6 +15,9 @@ extern pros::MotorGroup right_motor_group;
 extern pros::Motor lower_intake_motor;
 extern pros::Motor upper_intake_motor;
 
+//scrapper pnuematic
+extern pros::ADIDigitalOut scrapper;
+
 //drivetrain settings
 extern lemlib::Drivetrain drivetrain;
 
@@ -50,3 +53,4 @@ extern lemlib::Chassis chassis;
 
 //create potentiometer for autonomous selector
 extern pros::ADIAnalogIn autonomous_selector;
+
