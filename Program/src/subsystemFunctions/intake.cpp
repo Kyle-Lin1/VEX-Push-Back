@@ -1,4 +1,5 @@
 #include "main.h"
+#include "pros/misc.h"
 #include "subsystemHeaders/intake.hpp"
 
 void set_lower_intake(int power){
@@ -27,3 +28,18 @@ void set_intake() {
     set_upper_intake(upperMotorPower);
     set_lower_intake(lowerMotorPower);
 }
+
+bool set_intake_piston(bool intake_state){
+    if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)){
+        if (intake_state == true){//if solenoid is not activated, activate it
+            intake_piston.set_value(true);
+            intake_state = false;
+        }
+        else if (intake_state == false){
+            intake_piston.set_value(false); //if solenoid is activated, deactivate it
+            intake_state = true;
+        }
+    }
+    pros::delay(20); //delay to save resources
+    return intake_state;
+}    

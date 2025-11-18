@@ -21,6 +21,7 @@ void initialize() {
 	pros::lcd::initialize();
 	pros::lcd::set_text(1, "32092D");
 	chassis.calibrate(); // calibrate sensors
+	pros::delay(2000); // wait for calibration to finish
 	pros::lcd::register_btn1_cb(on_center_button);
 	//thread to for brain screen and position logging
 	pros::Task screenTask([&]() {
@@ -72,6 +73,10 @@ void competition_initialize() {}
 void autonomous() {
 	left_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	right_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	//redLeft();
+	//skillsParking();
+	redRight();
+	//skills();
 	/*
 	// Add names of autonomous routines here
 	// Make sure the order matches the autons array below
@@ -119,10 +124,12 @@ void opcontrol() {
   	right_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 	//false = not activated, true = activated
 	bool scrapper_state = false; //initialize scrapper state 
+	bool intake_state = false; //initialize intake piston state
 	while (true) {
 		set_drive(); // set drive controls
 		set_intake(); //set intake controls
 		scrapper_state = set_scrapper(scrapper_state);
+		intake_state = set_intake_piston(intake_state);
 		pros::delay(20);  // 20 second delay to save resources
 	}
 }
