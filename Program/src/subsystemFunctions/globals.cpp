@@ -15,7 +15,7 @@ pros::MotorGroup right_motor_group({1, 2,5 }, //motor order: front right, back r
 
 //intake motors
 pros::Motor lower_intake_motor(-20, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
-pros::Motor upper_intake_motor(19, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
+pros::Motor upper_intake_motor(-19, pros::v5::MotorGears::blue, pros::v5::MotorUnits::counts);
 
 //scarpper pnuematic
 pros::ADIDigitalOut scrapper('B');
@@ -32,15 +32,15 @@ lemlib::Drivetrain drivetrain(&left_motor_group, // left motor group
 
 
 //odometry sensors               
-pros::Imu imu(12);
-pros::Rotation horizontal_encoder(-13);
-pros::Rotation vertical_encoder(-4);
+pros::Imu imu(11);
+pros::Rotation horizontal_encoder(12);
+pros::Rotation vertical_encoder(6);
 
 //tracking wheels
-lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_2, -3.45);
-lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_2, -.45);
+lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_2, -.8);//-.8 - .-75 closer to -.8
+lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_2, -.34);//-.35 - -.3
 
-// odometry settings
+// odometry settings    
 lemlib::OdomSensors odom_sensors(&vertical_tracking_wheel, // vertical tracking wheel 1
                             nullptr, // vertical tracking wheel 2 set to nullptr as we don't have a second one
                             &horizontal_tracking_wheel, // horizontal tracking wheel 1
@@ -76,9 +76,9 @@ lemlib::ControllerSettings lateral_controller(10, // proportional gain (kP)
 );
 
 // angular PID controller
-lemlib::ControllerSettings angular_controller(4, // proportional gain (kP)
+lemlib::ControllerSettings angular_controller(1.75, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              6, // derivative gain (kD)
+                                              7, // derivative gain (kD)
                                                 0, // anti windup
                                               0, // small error range, in inches
                                               100, // small error range timeout, in milliseconds

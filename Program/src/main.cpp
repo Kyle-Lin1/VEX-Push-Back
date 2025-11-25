@@ -71,11 +71,13 @@ void competition_initialize() {}
 
 
 void autonomous() {
+	//hold for accuracy
 	left_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	right_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	tuning();
 	//redLeft();
 	//skillsParking();
-	redRight();
+	//redRight();
 	//skills();
 	/*
 	// Add names of autonomous routines here

@@ -1,6 +1,7 @@
 #pragma once
 
 //testing autonomous routines
+void tuning();
 void testAuton1();
 void testAuton2();
 
