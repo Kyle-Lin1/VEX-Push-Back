@@ -10,7 +10,7 @@ void skills();
 void skillsParking();
 
 //head to head autonomous routines
-void redRight();
+void redRight_guardGoal();
 
 void redLeft();
 

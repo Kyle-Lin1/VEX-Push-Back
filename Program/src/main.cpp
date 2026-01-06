@@ -74,10 +74,10 @@ void autonomous() {
 	//hold for accuracy
 	left_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	right_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	tuning();
+	//tuning();
 	//redLeft();
 	//skillsParking();
-	//redRight();
+	redRight_guardGoal();
 	//skills();
 	/*
 	// Add names of autonomous routines here
