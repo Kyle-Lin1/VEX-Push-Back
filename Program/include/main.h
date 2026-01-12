@@ -83,6 +83,7 @@ void opcontrol(void);
 #include "subsystemHeaders/intake.hpp"
 #include "subsystemHeaders/ekf.hpp"
 #include "subsystemHeaders/scrapper.hpp"
+#include "subsystemHeaders/hook.hpp"
 
 #endif
 

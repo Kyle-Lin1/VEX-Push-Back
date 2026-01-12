@@ -18,6 +18,7 @@ extern pros::Motor upper_intake_motor;
 //scrapper pnuematic
 extern pros::ADIDigitalOut scrapper;
 extern pros::ADIDigitalOut intake_piston;
+extern pros::ADIDigitalOut hook;
 
 //drivetrain settings
 extern lemlib::Drivetrain drivetrain;

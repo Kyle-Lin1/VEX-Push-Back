@@ -7,7 +7,7 @@
 
  
 // Drivetrain left motor group
-pros::MotorGroup left_motor_group({ -10, -9, -8 }, //motor order: front left, back left, middle left
+pros::MotorGroup left_motor_group({ -10, -9, -7 }, //motor order: front left, back left, middle left
     pros::MotorGearset::blue);
 // Drivetrain right motor group
 pros::MotorGroup right_motor_group({1, 2,5 }, //motor order: front right, back right, middle right
@@ -20,6 +20,7 @@ pros::Motor upper_intake_motor(-19, pros::v5::MotorGears::blue, pros::v5::MotorU
 //scarpper pnuematic
 pros::ADIDigitalOut scrapper('B');
 pros::ADIDigitalOut intake_piston('C');
+pros::ADIDigitalOut hook('D');
  
 //drive train settings
 lemlib::Drivetrain drivetrain(&left_motor_group, // left motor group

@@ -127,11 +127,13 @@ void opcontrol() {
 	//false = not activated, true = activated
 	bool scrapper_state = false; //initialize scrapper state 
 	bool intake_state = false; //initialize intake piston state
+	bool hook_state = false; //initialize hook state
 	while (true) {
 		set_drive(); // set drive controls
 		set_intake(); //set intake controls
 		scrapper_state = set_scrapper(scrapper_state);
 		intake_state = set_intake_piston(intake_state);
+		hook_state = set_hook(hook_state);
 		pros::delay(20);  // 20 second delay to save resources
 	}
 }
