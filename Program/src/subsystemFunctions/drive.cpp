@@ -27,7 +27,7 @@ void set_drive(){
         // get left y and right x positions
         int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
         //limit maximum turning power for precision
-        int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)*.85;
+        int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)*.65;
 
         //create dead zone to prevent controller drift
         if(abs(leftY) < 5){
@@ -45,6 +45,23 @@ void set_drive(){
 }
 
 //autonomous functions
+
+void wiggle(int millisec){
+        int frequency = 100;
+        int wiggles = millisec/frequency;
+        
+        for(int i = 0; i < wiggles; i++){
+                left_motor_group.move(50);
+                right_motor_group.move(-50);
+                pros::delay(frequency/2);
+                left_motor_group.move(-50);
+                right_motor_group.move(50);
+                pros::delay(frequency/2);
+        }
+        left_motor_group.move(0);
+        right_motor_group.move(0);
+}
+
 void turn(double millisec, int power){
         left_motor_group.move(power);
         right_motor_group.move(-power);

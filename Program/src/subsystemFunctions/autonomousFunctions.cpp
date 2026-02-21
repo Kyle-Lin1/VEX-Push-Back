@@ -15,37 +15,138 @@
 #include "subsystemHeaders/intake.hpp"
 #include <random>
 
+void skillsParking(){
+    chassis.setPose(20.5,-17.5,180);
+    
+    lower_intake_motor.move(127);
+    scrapper.set_value(true);
+    chassis.moveToPoint(23, -48, 1500, {.maxSpeed = 80, .minSpeed = 30});
+    chassis.turnToHeading(270, 500);
+    //slam into match loader
+    chassis.moveToPoint(0, -48, 1000, {.maxSpeed = 40, .minSpeed = 30});
+    chassis.moveToPoint(16, -48, 1000, {.forwards = false, .minSpeed = 30}, false);
+    chassis.moveToPoint(0, -48, 2000, {.maxSpeed = 40, .minSpeed = 30}, false);
+    chassis.turnToHeading(265, 500);
+    chassis.moveToPoint(60, -48, 1000, {.forwards = false, .maxSpeed = 80, .minSpeed = 30}, false);
+    pros::delay(500);
+    upper_intake_motor.move(127);
+    pros::delay(5000);
+    chassis.moveToPoint(30, -48, 500, {.maxSpeed = 80, .minSpeed = 30}, false);
+    chassis.turnToHeading(0, 500 );
+    lower_intake_motor.move(-127);
+    chassis.moveToPose(8, 2, 0, 1000, {.maxSpeed = 80, .minSpeed = 30}, false);
+}
 
 void skills(){
-    chassis.setPose(23,-17.5,180);
+    chassis.setPose(20.5,-17.5,180);
+
     lower_intake_motor.move(127);
     scrapper.set_value(true);
     //slam into match loader
     chassis.moveToPoint(23, -48, 1500, {.maxSpeed = 80, .minSpeed = 30});
     chassis.turnToHeading(270, 500);
-    chassis.moveToPoint(0, -48, 1500, {.maxSpeed = 80, .minSpeed = 30});
-    //score in long goal
-    chassis.moveToPoint(15, -48, 1000, {.forwards = false, .maxSpeed = 80, .minSpeed = 30}, false);
-    //remove blue blocks
-    chassis.turnToHeading(120, 500);
-    chassis.moveToPose(48, -60, 90, 2000, {.forwards =false, .maxSpeed = 80, .minSpeed = 30});
+    chassis.moveToPoint(0, -49, 1500, {.maxSpeed = 40, .minSpeed = 30});//inside match load
+    chassis.moveToPoint(10, -49, 500, {.forwards = false, .minSpeed = 25}, false);
+    chassis.moveToPoint(0, -49, 1500, {.maxSpeed = 40, .minSpeed = 30}, false);
+    chassis.moveToPoint(37.5, -34, 1000, {.forwards = false, .minSpeed = 70, .earlyExitRange = 6});
+    lower_intake_motor.move(0);
+    scrapper.set_value(false);
+    chassis.moveToPoint(110, -38, 2000, {.forwards=false});
+    chassis.moveToPoint(116, -50, 1000, {.forwards=false});
+    chassis.moveToPose(80, -50, 90, 2000, {.forwards=false}, false);
+    lower_intake_motor.move(-127);
+    upper_intake_motor.move(127);
+    scrapper.set_value(true);
+    pros::delay(300);
+    lower_intake_motor.move(127);
+    pros::delay(3000);
+    chassis.setPose(103,-48, chassis.getPose().theta);
+    upper_intake_motor.move(0);
+    chassis.moveToPoint(150, -48, 1500, {.maxSpeed=50});
+    chassis.moveToPoint(150, -48, 2000);
+    chassis.moveToPoint(94, -48, 1500, {.forwards=false, .maxSpeed=80}, false);
+    lower_intake_motor.move(-127);
+    upper_intake_motor.move(127);
+    pros::delay(400);
+    lower_intake_motor.move(127);
+    pros::delay(3000);
+    chassis.setPose(103,-48, chassis.getPose().theta);
+    upper_intake_motor.move(0);
+    chassis.moveToPoint(110, -30, 1000, {.minSpeed=40, .earlyExitRange=5});
+    chassis.moveToPoint(110, 24, 3000, {.minSpeed=40, .earlyExitRange=5});
+    chassis.moveToPoint(120, 48, 1500);
+    chassis.moveToPose(150, 50, 90, 3500, {.maxSpeed=60});
+    chassis.moveToPoint(106.5, 34, 1000, {.forwards = false, .minSpeed = 70, .earlyExitRange = 6});
+    lower_intake_motor.move(0);
+    chassis.moveToPoint(34, 36, 2000, {.forwards=false});
+    chassis.moveToPoint(28, 48, 1000, {.forwards=false});
+    chassis.moveToPose(60, 48, 270, 2000, {.forwards=false}, false);
+    lower_intake_motor.move(-127);
+    upper_intake_motor.move(127);
+    pros::delay(300);
+    lower_intake_motor.move(127);
+    pros::delay(4000);
+    chassis.setPose(41,48,chassis.getPose().theta);
+     upper_intake_motor.move(0);
+    chassis.moveToPoint(0, 48, 1500, {.maxSpeed=50});
+    chassis.moveToPoint(0, 48, 2000);
+    chassis.moveToPoint(60, 48, 1500, {.forwards=false, .maxSpeed=80}, false);
+    lower_intake_motor.move(-127);
+    upper_intake_motor.move(127);
+    pros::delay(400);
+    lower_intake_motor.move(127);
+    pros::delay(3000);
+    chassis.setPose(41,48, chassis.getPose().theta);
+    upper_intake_motor.move(0);
+    lower_intake_motor.move(0);
+    scrapper.set_value(false);
+    chassis.moveToPose(12, 28, 225, 1500);
+    chassis.moveToPoint(3, -8, 3000, {.maxSpeed=90});
+
+}
+
+void redLeft(){
+    chassis.setPose(20,14,55);
+    lower_intake_motor.move(127);
+    intake_piston.set_value(true);
+    chassis.moveToPoint(30, 18, 1500,{.maxSpeed=80, .minSpeed=20, .earlyExitRange=4});
+    chassis.moveToPoint(50, 26, 1500, {.maxSpeed=80});
+    chassis.moveToPose(60, 13, 315, 2000,{.forwards=false}, false);
+    upper_intake_motor.move(127);
+    pros::delay(300);
+    upper_intake_motor.move(0);
+    pros::delay(300);
+    upper_intake_motor.move(127);
+    pros::delay(1000);
+    intake_piston.set_value(false);
+    upper_intake_motor.move(0);
+    chassis.moveToPoint(30, 49, 1500, {.maxSpeed = 80, .minSpeed = 30});
+    scrapper.set_value(true);
+    chassis.turnToHeading(270, 1000); 
+    chassis.moveToPoint(-1, 52, 1800, {.maxSpeed = 40, .minSpeed = 30});
+    chassis.moveToPoint(50, 52, 1500, {.forwards=false, .maxSpeed=80}, false);
+    lower_intake_motor.move(-127);
+    upper_intake_motor.move(127);
+    pros::delay(300);
+    lower_intake_motor.move(127);
+    pros::delay(3000);
 }
 
 void redRight_guardGoal(){
     chassis.setPose(24,-12,120.2);
     lower_intake_motor.move(127);
+    hook.set_value(true);
     //move to the first three blocks
-    chassis.moveToPoint(49, -22, 1000, {.maxSpeed = 60, .earlyExitRange = 8});
-
+    chassis.moveToPoint(49, -22, 1000, {.maxSpeed = 40, .earlyExitRange = 8});
     //move to nuetral blocks
     chassis.moveToPose(64, -47, 154, 2500, {.maxSpeed = 60, .earlyExitRange = 8}, false);
-    chassis.turnToHeading(166, 60);
+    chassis.turnToHeading(166, 60, {}, true);
     scrapper.set_value(true);
     chassis.moveToPoint(55, -30, 1600, {.forwards=false, .maxSpeed = 70, .earlyExitRange = 8}, false);
     chassis.turnToHeading(270, 700); 
     chassis.moveToPoint(30, -46, 2000, {.maxSpeed = 80, .minSpeed = 30,  .earlyExitRange = 8}, false);
     //slam into match loader
-    chassis.moveToPose(6, -47, 270, 2500, {.maxSpeed = 80, .minSpeed = 30});
+    chassis.moveToPose(6, -47, 270, 2550, {.maxSpeed = 80, .minSpeed = 30});
     pros::delay(2500);
     //score in long goal
     chassis.moveToPoint(60, -48, 1000, {.forwards = false, .maxSpeed = 80, .minSpeed = 30}, false);
@@ -59,28 +160,23 @@ void redRight_guardGoal(){
 }
 
 void redRight_clearMatchLoad(){
-    chassis.setPose(24,-12,120.2);
+    chassis.setPose(20,-14,125);
     lower_intake_motor.move(127);
-    //move to the first three blocks
-    chassis.moveToPoint(48, -22, 1000, {.maxSpeed = 60, .earlyExitRange = 8});
-    //move to nuetral blocks
-    chassis.moveToPose(64, -47, 154, 2500, {.maxSpeed = 60, .earlyExitRange = 8}, false);
-    chassis.turnToHeading(166, 60);
+    chassis.moveToPoint(30, -18, 1500,{.maxSpeed=80, .minSpeed=20, .earlyExitRange=4}, false);
+    chassis.moveToPoint(53, -25, 1500, {.maxSpeed=80},false);
+    chassis.moveToPoint(61.5, -44, 1500,{.maxSpeed=75});
+
+    chassis.moveToPoint(48, -24, 1500, {.forwards=false});
+    chassis.moveToPoint(23, -48, 1500, {.maxSpeed = 80, .minSpeed = 30});
     scrapper.set_value(true);
-    pros::delay(100);
-    chassis.moveToPoint(55, -30, 1600, {.forwards=false, .maxSpeed = 70, .earlyExitRange = 8}, false);
-    chassis.turnToHeading(270, 700); 
-    chassis.moveToPoint(30, -46, 2000, {.maxSpeed = 80, .minSpeed = 30,  .earlyExitRange = 8}, false);
-    //slam into match loader
-    chassis.moveToPose(6, -48, 270, 2200, {.maxSpeed = 80, .minSpeed = 30});
-    //score in long goal
-    chassis.moveToPoint(60, -48, 1000, {.forwards = false, .maxSpeed = 80, .minSpeed = 30}, false);
-    pros::delay(500);
+    chassis.moveToPoint(-15, -48, 2000, {.maxSpeed = 40, .minSpeed = 30});
+    chassis.moveToPoint(55, -48, 1500, {.forwards=false, .maxSpeed=80}, false);
+    lower_intake_motor.move(-127);
     upper_intake_motor.move(127);
-    pros::delay(2400);
-    //remove blue blocks
-    chassis.setPose(40, -48, 270);    
-    chassis.moveToPose(0, -46, 275, 2000, {.maxSpeed = 80, .minSpeed = 30});
+    scrapper.set_value(false);
+    pros::delay(300);
+    lower_intake_motor.move(127);
+    pros::delay(3000);
 }
 
 /*
@@ -109,30 +205,31 @@ void redRight(){
     chassis.moveToPose(0, -48, 270, 2000, {.maxSpeed = 80, .minSpeed = 30});
 }
     */
-
+/*
 void skillsParking(){
     lower_intake_motor.move(-127);
     move(60, 1000);
     move(-40, 500);
 }
-
+*/
 void oldRedRight(){
     lower_intake_motor.move(127);
     scrapper.set_value(true);
-    move(60, 950);
+    move(60, 1050);
     pros::delay(500);
     turn(360, 60);
     pros::delay(100);
-    move(40, 1000);
+    move(40, 2000);
     //left_motor_group.move(30);
     //right_motor_group.move(30);
     //slam wall
-    pros::delay(00);
+    move(-40, 300);
+    move(40, 1500);
     left_motor_group.move(-15);
     right_motor_group.move(-15);
-    pros::delay(500);
+    pros::delay(1000);
     move(-40, 1400);
-    move(40,100);
+    //move(40,100);
     upper_intake_motor.move(127);
 }
 

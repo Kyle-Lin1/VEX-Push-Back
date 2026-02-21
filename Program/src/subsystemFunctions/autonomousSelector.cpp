@@ -1,7 +1,8 @@
 #include "main.h"
 #include "subsystemHeaders/autonomousSelector.hpp"
 
-int get_auton_selector(int auton_count) {
+//using potentiometer to select autonomous
+int get_pot_auton_selector(int auton_count) {
     // Read the potentiometer value
     int pot_value = autonomous_selector.get_value();
     
@@ -10,4 +11,8 @@ int get_auton_selector(int auton_count) {
     int index = (pot_value * auton_count) / 4096;
 
     return index;
+}
+
+int get_auton_selector(int auton_count){
+    
 }

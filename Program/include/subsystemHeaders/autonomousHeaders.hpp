@@ -1,6 +1,8 @@
 #pragma once
 
 //testing autonomous routines
+void getA();
+
 void tuning();
 void testAuton1();
 void testAuton2();
@@ -10,7 +12,9 @@ void skills();
 void skillsParking();
 
 //head to head autonomous routines
-void redRight_guardGoal();
+void redRight_clearMatchLoad();
+
+void oldRedRight();
 
 void redLeft();
 

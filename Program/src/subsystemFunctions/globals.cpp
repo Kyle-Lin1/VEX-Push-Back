@@ -10,7 +10,7 @@
 pros::MotorGroup left_motor_group({ -10, -9, -7 }, //motor order: front left, back left, middle left
     pros::MotorGearset::blue);
 // Drivetrain right motor group
-pros::MotorGroup right_motor_group({1, 2,5 }, //motor order: front right, back right, middle right
+pros::MotorGroup right_motor_group({1, 15,5 }, //motor order: front right, back right, middle right
     pros::MotorGearset::blue);
 
 //intake motors

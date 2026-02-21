@@ -75,24 +75,26 @@ void autonomous() {
 	left_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	right_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	//tuning();
-	//redLeft();
+	redLeft();
 	//skillsParking();
-	redRight_guardGoal();
+	//redRight_clearMatchLoad();
+	//skillsParking();
 	//skills();
+	//oldRedRight();
 	/*
 	// Add names of autonomous routines here
 	// Make sure the order matches the autons array below
 	const char* auton_names[] = {
-	"Auton 1",
-	"Auton 2",
-	"Auton 3"
+	"redLeft",
+	"redRight",
+	"skills"
 	};
 
 	// Array of function pointers
 	void (*autons[])() = {// Add autonomous functions here
-		//auton1,
-		//auton2,
-		//auton3
+		//redleft,
+		//redRight,
+		//skills
 	}; 
 
 	// calls auton selector function
