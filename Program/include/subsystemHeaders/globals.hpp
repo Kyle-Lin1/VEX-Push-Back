@@ -1,5 +1,5 @@
 #pragma once
-#include "kalmanFilter.hpp"
+#include "ekf.hpp"
 #include "lemlib/chassis/chassis.hpp"
 #include "lemlib/chassis/trackingWheel.hpp"
 #include "pros/abstract_motor.hpp"
@@ -57,4 +57,5 @@ extern lemlib::Chassis chassis;
 //create potentiometer for autonomous selector
 extern pros::ADIAnalogIn autonomous_selector;
 
- extern KalmanFilter kf;
+// Extended Kalman Filter for pose estimation
+extern EKF ekf;

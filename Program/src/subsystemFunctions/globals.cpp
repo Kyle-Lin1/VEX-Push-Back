@@ -4,7 +4,7 @@
 #include "lemlib/chassis/trackingWheel.hpp"
 #include "pros/abstract_motor.hpp"
 #include "pros/motors.hpp"
-#include "subsystemHeaders/kalmanFilter.hpp"
+#include "subsystemHeaders/ekf.hpp"
 
  
 // Drivetrain left motor group
@@ -100,5 +100,5 @@ lemlib::Chassis chassis(
 //create potentiometer for autonomous selector
 pros::ADIAnalogIn autonomous_selector('A');
 
-//create kalman filter for pose estimation
-KalmanFilter kf;
+//create Extended Kalman Filter for pose estimation
+EKF ekf;
