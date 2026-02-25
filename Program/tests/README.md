@@ -27,11 +27,18 @@ The test suite includes the following test cases:
 
 ### Prerequisites
 
-- C++ compiler with C++17 support (g++, clang++)
-- Make
+**All Platforms:**
+- C++ compiler with C++17 support (g++, clang++, MinGW on Windows)
+- Make (or mingw32-make on Windows)
+
+**Windows Users:**
+- Install MinGW-w64 or use MSYS2
+- Make sure `g++` and `mingw32-make` (or `make`) are in your PATH
+- Alternatively, use WSL (Windows Subsystem for Linux)
 
 ### Quick Start
 
+**Linux/macOS:**
 ```bash
 # Navigate to the tests directory
 cd tests
@@ -42,6 +49,28 @@ make test
 # Or build first, then run
 make
 ./test_ekf
+```
+
+**Windows (PowerShell/CMD):**
+```powershell
+# Navigate to the tests directory
+cd tests
+
+# Build and run all tests
+make test
+# or if using mingw32-make:
+mingw32-make test
+
+# Or build first, then run
+make
+test_ekf.exe
+```
+
+**Windows (WSL):**
+```bash
+# Same as Linux/macOS
+cd tests
+make test
 ```
 
 ### Available Make Targets
@@ -162,10 +191,35 @@ int main() {
 
 ## Troubleshooting
 
+### Windows-Specific Issues
+
+**Error 193 or "CreateProcess failed":**
+- This means the executable format is wrong for Windows
+- Make sure you're using MinGW g++ (not Linux g++)
+- Rebuild with: `make clean && make`
+- The Makefile should automatically create `test_ekf.exe` on Windows
+
+**"g++ is not recognized":**
+- Install MinGW-w64 or MSYS2
+- Add MinGW bin directory to your PATH
+- Example: `C:\msys64\mingw64\bin`
+
+**"make is not recognized":**
+- Use `mingw32-make` instead of `make`
+- Or install make via chocolatey: `choco install make`
+- Or use WSL (recommended for easier development)
+
+**Path issues with spaces:**
+- If your path has spaces (like "Vex 2025-2026"), consider:
+  - Using WSL
+  - Moving the project to a path without spaces
+  - Using quotes in commands if needed
+
 ### Compilation Errors
 - Ensure you're in the `tests/` directory
 - Check that `../include/subsystemHeaders/ekf.hpp` exists
 - Verify C++17 support: `g++ --version`
+- On Windows, ensure you're using MinGW g++, not MSVC
 
 ### Test Failures
 - Review the specific assertion that failed
