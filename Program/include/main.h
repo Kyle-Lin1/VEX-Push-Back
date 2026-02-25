@@ -84,6 +84,7 @@ void opcontrol(void);
 #include "subsystemHeaders/ekf.hpp"
 #include "subsystemHeaders/scrapper.hpp"
 #include "subsystemHeaders/hook.hpp"
+#include "subsystemHeaders/kalmanFilter.hpp"
 
 #endif
 
