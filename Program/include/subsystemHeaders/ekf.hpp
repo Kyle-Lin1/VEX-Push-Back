@@ -2,39 +2,58 @@
 #include <array>
 
 /**
- * Simple Extended Kalman Filter (EKF) for robot odometry
+ * Extended Kalman Filter (EKF) for robot odometry
  * Tracks x, y position and heading (theta).
  *
- * Uses left/right wheel encoders for distance and IMU for heading correction.
+ * Uses vertical/horizontal tracking wheel encoders and IMU for heading correction.
+ * Properly handles cross-correlations between position and heading errors.
  */
 class EKF {
 public:
-    // constructor (wheel radius, wheel base, timestep)
-    EKF(double wheelRadius, double wheelBase, double dtIn);
+    // Default constructor
+    EKF();
 
-    // main update (feed in encoder distances and imu heading)
-    void update(double leftDist, double rightDist, double imuHeading);
+    // Initialize the filter with starting pose
+    void initialize(double x_0, double y_0, double theta_0);
 
-    // accessors for robot pose
+    // Reset pose (call when using lemlib's setPose())
+    void setPose(double x_0, double y_0, double theta_0);
+
+    // Main update using vertical/horizontal encoder deltas and IMU heading
+    // vertical_delta: forward/backward movement in inches
+    // horizontal_delta: left/right strafe movement in inches
+    // imu_heading: IMU heading in degrees
+    void update(double vertical_delta, double horizontal_delta, double imu_heading);
+
+    // Accessors for robot pose
     double getX() const;
     double getY() const;
-    double getTheta() const;
+    double getTheta() const; // returns theta in degrees
+
+    // Tunable noise parameters (public for easy tuning)
+    // Process noise - increase if filter reacts too slowly
+    double q_pos;      // position process noise
+    double q_theta;    // heading process noise
+
+    // Measurement noise - increase if IMU is noisy
+    double r_imu;      // IMU measurement noise
 
 private:
-    // prediction and correction steps
-    void predict(double dl, double dr);
-    void updateIMU(double imuHeading);
+    // Prediction step using encoder deltas
+    void predict(double vertical_delta, double horizontal_delta);
 
-    // robot state
+    // Update step using IMU heading measurement
+    void updateIMU(double imu_heading_deg);
+
+    // Robot state (x, y in inches, theta in radians internally)
     double x, y, theta;
-    double r, b, dt;
 
-    // covariance matrix
+    // Covariance matrix (3x3)
     std::array<std::array<double, 3>, 3> P;
 
-    // process noise
+    // Process noise covariance matrix (3x3)
     std::array<std::array<double, 3>, 3> Q;
 
-    // measurement noise (IMU)
+    // Measurement noise (scalar for IMU)
     double R;
 };

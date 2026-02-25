@@ -1,9 +1,9 @@
 #include "main.h"
 //prevent unhelpful unused include warnings
-#include "lemlib/api.hpp" // IWYU pragma: keep 
+#include "lemlib/api.hpp" // IWYU pragma: keep
 #include "subsystemHeaders/drive.hpp"
 #include "subsystemHeaders/globals.hpp"
-#include "subsystemHeaders/kalmanFilter.hpp"
+#include "subsystemHeaders/ekf.hpp"
 
 /**
  * A callback function for LLEMU's center button.
@@ -27,31 +27,41 @@ void initialize() {
 	pros::lcd::register_btn1_cb(on_center_button);
 
 
-//change to match starting position of autonomous
-kf.initialize(0, 0, 0);
+	// Initialize Extended Kalman Filter with starting position
+	// Change to match starting position of autonomous
+	ekf.initialize(0, 0, 0);
 
-pros::Task kalman_task([]{
+	// EKF update task - runs continuously to fuse encoder and IMU data
+	pros::Task ekf_task([]{
+		// Convert centidegrees to inches
+		double tracking_wheel_diameter = 2.75;
+		double centi_to_inches = (M_PI * tracking_wheel_diameter) / 36000.0;
 
-    // convert centidegrees to inches
-    double tracking_wheel_diameter = 2.75; 
-    double centi_to_inches = (M_PI * tracking_wheel_diameter) / 36000.0;
+		double prev_v = vertical_encoder.get_position() * centi_to_inches;
+		double prev_h = horizontal_encoder.get_position() * centi_to_inches;
 
-    double prev_v = vertical_encoder.get_position()   * centi_to_inches;
-    double prev_h = horizontal_encoder.get_position() * centi_to_inches;
+		while(true){
+			// Get current encoder positions
+			double cur_v = vertical_encoder.get_position() * centi_to_inches;
+			double cur_h = horizontal_encoder.get_position() * centi_to_inches;
 
-    while(true){
-        double cur_v = vertical_encoder.get_position()   * centi_to_inches;
-        double cur_h = horizontal_encoder.get_position() * centi_to_inches;
-        double heading = imu.get_heading();
-        if(heading > 180.0) {
-			heading -= 360.0;
+			// Get IMU heading (convert to -180 to 180 range)
+			double heading = imu.get_heading();
+			if(heading > 180.0) {
+				heading -= 360.0;
+			}
+
+			// Update EKF with encoder deltas and IMU heading
+			ekf.update(cur_v - prev_v, cur_h - prev_h, heading);
+
+			// Update previous values
+			prev_v = cur_v;
+			prev_h = cur_h;
+
+			// Run at 100Hz (10ms delay)
+			pros::delay(10);
 		}
-        kf.update(cur_v - prev_v, cur_h - prev_h, heading);
-        prev_v = cur_v;
-        prev_h = cur_h;
-        pros::delay(10);
-    }
-});
+	});
 
 
 	//thread to for brain screen and position logging
