@@ -1,6 +1,11 @@
 #include "subsystemHeaders/ekf.hpp"
 #include <cmath>
 
+// Define M_PI if not already defined (needed for some Windows compilers)
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 // Helper function to wrap angle to [-pi, pi]
 static double wrapAngle(double rad) {
     while (rad > M_PI) rad -= 2.0 * M_PI;
