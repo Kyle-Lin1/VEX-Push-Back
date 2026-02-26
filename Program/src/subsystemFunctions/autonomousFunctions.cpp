@@ -10,13 +10,14 @@
 #include "subsystemHeaders/drive.hpp"
 #include "subsystemHeaders/globals.hpp"
 #include "subsystemHeaders/autonomousHeaders.hpp"
+#include "subsystemHeaders/poseControl.hpp"
 #include <chrono>
 #include <memory>
 #include "subsystemHeaders/intake.hpp"
 #include <random>
 
 void skillsParking(){
-    chassis.setPose(20.5,-17.5,180);
+    setRobotPose(20.5,-17.5,180);
     
     lower_intake_motor.move(127);
     scrapper.set_value(true);
@@ -38,7 +39,7 @@ void skillsParking(){
 }
 
 void skills(){
-    chassis.setPose(20.5,-17.5,180);
+    setRobotPose(20.5,-17.5,180);
 
     lower_intake_motor.move(127);
     scrapper.set_value(true);
@@ -60,7 +61,7 @@ void skills(){
     pros::delay(300);
     lower_intake_motor.move(127);
     pros::delay(3000);
-    chassis.setPose(103,-48, chassis.getPose().theta);
+    setRobotPose(103,-48, getRobotPose().theta);
     upper_intake_motor.move(0);
     chassis.moveToPoint(150, -48, 1500, {.maxSpeed=50});
     chassis.moveToPoint(150, -48, 2000);
@@ -70,7 +71,7 @@ void skills(){
     pros::delay(400);
     lower_intake_motor.move(127);
     pros::delay(3000);
-    chassis.setPose(103,-48, chassis.getPose().theta);
+    setRobotPose(103,-48, getRobotPose().theta);
     upper_intake_motor.move(0);
     chassis.moveToPoint(110, -30, 1000, {.minSpeed=40, .earlyExitRange=5});
     chassis.moveToPoint(110, 24, 3000, {.minSpeed=40, .earlyExitRange=5});
@@ -86,7 +87,7 @@ void skills(){
     pros::delay(300);
     lower_intake_motor.move(127);
     pros::delay(4000);
-    chassis.setPose(41,48,chassis.getPose().theta);
+    setRobotPose(41,48,getRobotPose().theta);
      upper_intake_motor.move(0);
     chassis.moveToPoint(0, 48, 1500, {.maxSpeed=50});
     chassis.moveToPoint(0, 48, 2000);
@@ -96,7 +97,7 @@ void skills(){
     pros::delay(400);
     lower_intake_motor.move(127);
     pros::delay(3000);
-    chassis.setPose(41,48, chassis.getPose().theta);
+    setRobotPose(41,48, getRobotPose().theta);
     upper_intake_motor.move(0);
     lower_intake_motor.move(0);
     scrapper.set_value(false);
@@ -106,7 +107,7 @@ void skills(){
 }
 
 void redLeft(){
-    chassis.setPose(20,14,55);
+    setRobotPose(20,14,55);
     lower_intake_motor.move(127);
     intake_piston.set_value(true);
     chassis.moveToPoint(30, 18, 1500,{.maxSpeed=80, .minSpeed=20, .earlyExitRange=4});
@@ -133,7 +134,7 @@ void redLeft(){
 }
 
 void redRight_guardGoal(){
-    chassis.setPose(24,-12,120.2);
+    setRobotPose(24,-12,120.2);
     lower_intake_motor.move(127);
     hook.set_value(true);
     //move to the first three blocks
@@ -154,13 +155,13 @@ void redRight_guardGoal(){
     upper_intake_motor.move(127);
     pros::delay(2500);
     //guard goal
-    chassis.setPose(60, -48, 270);    
+    setRobotPose(60, -48, 270);
     chassis.moveToPose(55, -48, 270, 500, { .maxSpeed = 80, .minSpeed = 30});
     chassis.moveToPoint(70, -48, 500, {.forwards = false});
 }
 
 void redRight_clearMatchLoad(){
-    chassis.setPose(20,-14,125);
+    setRobotPose(20,-14,125);
     lower_intake_motor.move(127);
     chassis.moveToPoint(30, -18, 1500,{.maxSpeed=80, .minSpeed=20, .earlyExitRange=4}, false);
     chassis.moveToPoint(53, -25, 1500, {.maxSpeed=80},false);
@@ -181,7 +182,7 @@ void redRight_clearMatchLoad(){
 
 /*
 void redRight(){
-    chassis.setPose(24,-12,120.2);
+    setRobotPose(24,-12,120.2);
     lower_intake_motor.move(127);
     //move to the first three blocks
     chassis.moveToPoint(48, -22, 1000, {.maxSpeed = 60, .earlyExitRange = 8});
@@ -201,7 +202,7 @@ void redRight(){
     upper_intake_motor.move(127);
     pros::delay(2500);
     //remove blue blocks
-    chassis.setPose(40, -48, 270);    
+    setRobotPose(40, -48, 270);
     chassis.moveToPose(0, -48, 270, 2000, {.maxSpeed = 80, .minSpeed = 30});
 }
     */
