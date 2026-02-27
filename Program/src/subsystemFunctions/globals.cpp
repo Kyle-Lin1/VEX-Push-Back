@@ -39,8 +39,8 @@ pros::Rotation horizontal_encoder(12);
 pros::Rotation vertical_encoder(6);
 
 //tracking wheels
-lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_2, -.8);
-lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_2, -.34);
+lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_2, -5.27);
+lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_2, .24);
 
 // odometry settings    
 lemlib::OdomSensors odom_sensors(&vertical_tracking_wheel, // vertical tracking wheel 1

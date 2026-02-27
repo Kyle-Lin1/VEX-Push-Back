@@ -30,7 +30,7 @@ void initialize() {
 
 	// Initialize Extended Kalman Filter with starting position
 	// Change to match starting position of autonomous
-	ekf.initialize(0, 0, 0);
+	ekf.initialize(24,-12,120.2);
 
 	// EKF update task - runs continuously to fuse encoder and IMU data
 	// and feeds the filtered pose back into LemLib's chassis
@@ -126,7 +126,7 @@ void autonomous() {
 	left_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	right_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	//tuning();
-	redLeft();
+	redRight_guardGoal();
 	//skillsParking();
 	//redRight_clearMatchLoad();
 	//skillsParking();
