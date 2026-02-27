@@ -4,6 +4,7 @@
 #include "subsystemHeaders/drive.hpp"
 #include "subsystemHeaders/globals.hpp"
 #include "subsystemHeaders/ekf.hpp"
+#include "subsystemHeaders/poseControl.hpp"
 
 /**
  * A callback function for LLEMU's center button.
@@ -74,13 +75,14 @@ void initialize() {
 	pros::Task screenTask([&]() {
         while (true) {
             // print robot location to the brain screen
-            // Note: chassis.getPose() now returns the EKF-filtered pose
-            pros::lcd::print(0, "X: %f", chassis.getPose().x); // x
-            pros::lcd::print(1, "Y: %f", chassis.getPose().y); // y
-            pros::lcd::print(2, "Theta: %f", chassis.getPose().theta); // heading
+            // Using getRobotPose() which returns the EKF-filtered pose
+            lemlib::Pose pose = getRobotPose();
+            pros::lcd::print(0, "X: %f", pose.x); // x
+            pros::lcd::print(1, "Y: %f", pose.y); // y
+            pros::lcd::print(2, "Theta: %f", pose.theta); // heading
             pros::lcd::print(3, "EKF Active"); // indicate EKF is running
             // log position telemetry
-            lemlib::telemetrySink()->info("Chassis pose (EKF): {}", chassis.getPose());
+            lemlib::telemetrySink()->info("Chassis pose (EKF): {}", pose);
             // delay to save resources
             pros::delay(50);
         }
