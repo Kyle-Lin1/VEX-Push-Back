@@ -4,6 +4,7 @@
 #include "subsystemHeaders/drive.hpp"
 #include "subsystemHeaders/globals.hpp"
 #include "subsystemHeaders/ekf.hpp"
+#include "subsystemHeaders/poseControl.hpp"
 
 /**
  * A callback function for LLEMU's center button.
@@ -32,6 +33,7 @@ void initialize() {
 	ekf.initialize(0, 0, 0);
 
 	// EKF update task - runs continuously to fuse encoder and IMU data
+	// and feeds the filtered pose back into LemLib's chassis
 	pros::Task ekf_task([]{
 		// Convert centidegrees to inches
 		double tracking_wheel_diameter = 2.75;
@@ -54,6 +56,11 @@ void initialize() {
 			// Update EKF with encoder deltas and IMU heading
 			ekf.update(cur_v - prev_v, cur_h - prev_h, heading);
 
+			// Feed EKF pose estimate back into LemLib's chassis
+			// This makes all autonomous movements and position queries use the filtered pose
+			lemlib::Pose ekf_pose(ekf.getX(), ekf.getY(), ekf.getTheta());
+			chassis.setPose(ekf_pose);
+
 			// Update previous values
 			prev_v = cur_v;
 			prev_h = cur_h;
@@ -64,15 +71,18 @@ void initialize() {
 	});
 
 
-	//thread to for brain screen and position logging
+	//thread for brain screen and position logging
 	pros::Task screenTask([&]() {
         while (true) {
             // print robot location to the brain screen
-            pros::lcd::print(0, "X: %f", chassis.getPose().x); // x
-            pros::lcd::print(1, "Y: %f", chassis.getPose().y); // y
-            pros::lcd::print(2, "Theta: %f", chassis.getPose().theta); // heading
+            // Using getRobotPose() which returns the EKF-filtered pose
+            lemlib::Pose pose = getRobotPose();
+            pros::lcd::print(0, "X: %f", pose.x); // x
+            pros::lcd::print(1, "Y: %f", pose.y); // y
+            pros::lcd::print(2, "Theta: %f", pose.theta); // heading
+            pros::lcd::print(3, "EKF Active"); // indicate EKF is running
             // log position telemetry
-            lemlib::telemetrySink()->info("Chassis pose: {}", chassis.getPose());
+            lemlib::telemetrySink()->info("Chassis pose (EKF): {}", pose);
             // delay to save resources
             pros::delay(50);
         }
