@@ -28,9 +28,16 @@ void initialize() {
 	pros::lcd::register_btn1_cb(on_center_button);
 
 
+	// Print EKF status
+	printf("\n========================================\n");
+	printf("  %s\n", EKF_STATUS_TEXT);
+	printf("========================================\n\n");
+
+#if ENABLE_EKF
 	// Initialize Extended Kalman Filter with starting position
 	// Change to match starting position of autonomous
-	ekf.initialize(24,-12,120.2);
+	ekf.initialize(0, 0, 0);
+	printf("[INIT] EKF initialized to (0, 0, 0)\n");
 
 	// EKF update task - runs continuously to fuse encoder and IMU data
 	// and feeds the filtered pose back into LemLib's chassis
@@ -42,10 +49,21 @@ void initialize() {
 		double prev_v = vertical_encoder.get_position() * centi_to_inches;
 		double prev_h = horizontal_encoder.get_position() * centi_to_inches;
 
+		// Logging counter
+		int log_counter = 0;
+		int log_interval = EKF_LOG_INTERVAL_MS / 10; // Convert ms to iterations (10ms per iteration)
+
+		printf("[EKF] Task started - updating at 100Hz\n");
+		pros::lcd::print(4, "EKF: ACTIVE");
+
 		while(true){
 			// Get current encoder positions
 			double cur_v = vertical_encoder.get_position() * centi_to_inches;
 			double cur_h = horizontal_encoder.get_position() * centi_to_inches;
+
+			// Calculate deltas
+			double delta_v = cur_v - prev_v;
+			double delta_h = cur_h - prev_h;
 
 			// Get IMU heading (convert to -180 to 180 range)
 			double heading = imu.get_heading();
@@ -54,12 +72,23 @@ void initialize() {
 			}
 
 			// Update EKF with encoder deltas and IMU heading
-			ekf.update(cur_v - prev_v, cur_h - prev_h, heading);
+			ekf.update(delta_v, delta_h, heading);
 
 			// Feed EKF pose estimate back into LemLib's chassis
 			// This makes all autonomous movements and position queries use the filtered pose
 			lemlib::Pose ekf_pose(ekf.getX(), ekf.getY(), ekf.getTheta());
 			chassis.setPose(ekf_pose);
+
+#if ENABLE_EKF_LOGGING
+			// Log periodically
+			if (log_counter % log_interval == 0) {
+				printf("[EKF] Enc: v=%.3f h=%.3f | Delta: dv=%.4f dh=%.4f | IMU: %.2f\n",
+					   cur_v, cur_h, delta_v, delta_h, heading);
+				printf("[EKF] Pose: X=%.2f Y=%.2f Theta=%.2f\n",
+					   ekf_pose.x, ekf_pose.y, ekf_pose.theta);
+			}
+#endif
+			log_counter++;
 
 			// Update previous values
 			prev_v = cur_v;
@@ -69,7 +98,34 @@ void initialize() {
 			pros::delay(10);
 		}
 	});
+#else
+	// EKF disabled - use raw LemLib odometry
+	printf("[INIT] EKF DISABLED - Using raw LemLib odometry\n");
+	pros::lcd::print(4, "EKF: DISABLED");
 
+	// Logging task for raw odometry (for comparison)
+	pros::Task logging_task([]{
+		int log_counter = 0;
+		int log_interval = EKF_LOG_INTERVAL_MS / 50; // 50ms per iteration
+
+		while(true) {
+#if ENABLE_EKF_LOGGING
+			if (log_counter % log_interval == 0) {
+				lemlib::Pose pose = chassis.getPose();
+				double imu_heading = imu.get_heading();
+				if(imu_heading > 180.0) {
+					imu_heading -= 360.0;
+				}
+
+				printf("[RAW] LemLib Pose: X=%.2f Y=%.2f Theta=%.2f | IMU: %.2f\n",
+					   pose.x, pose.y, pose.theta, imu_heading);
+			}
+#endif
+			log_counter++;
+			pros::delay(50);
+		}
+	});
+#endif
 
 	//thread for brain screen and position logging
 	pros::Task screenTask([&]() {
@@ -126,9 +182,9 @@ void autonomous() {
 	left_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	right_motor_group.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	//tuning();
-	redRight_guardGoal();
+	
 	//skillsParking();
-	//redRight_clearMatchLoad();
+	redRight_clearMatchLoad();
 	//skillsParking();
 	//skills();
 	//oldRedRight();

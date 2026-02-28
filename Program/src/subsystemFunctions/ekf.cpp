@@ -18,7 +18,7 @@ EKF::EKF() {
     // Initialize state to origin
     x = 0.0;
     y = 0.0;
-    theta = 0.0;
+    theta = 0;
 
     // Start with small uncertainty
     P = {{{0.1, 0, 0},

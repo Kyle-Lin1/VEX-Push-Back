@@ -153,7 +153,7 @@ void redLeft(){
 
 void redRight_guardGoal(){
     setRobotPose(24,-12,120.2);
-    /*
+    
     lower_intake_motor.move(127);
     hook.set_value(true);
     //move to the first three blocks
@@ -177,7 +177,7 @@ void redRight_guardGoal(){
     setRobotPose(60, -48, 270);
     chassis.moveToPose(55, -48, 270, 500, { .maxSpeed = 80, .minSpeed = 30});
     chassis.moveToPoint(70, -48, 500, {.forwards = false});
-    */
+    
 }
 
 void redRight_clearMatchLoad(){
