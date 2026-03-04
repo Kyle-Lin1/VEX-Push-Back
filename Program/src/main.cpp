@@ -3,6 +3,7 @@
 #include "lemlib/api.hpp" // IWYU pragma: keep
 #include "subsystemHeaders/drive.hpp"
 #include "subsystemHeaders/globals.hpp"
+#include "subsystemHeaders/ekfConfig.hpp"
 #include "subsystemHeaders/ekf.hpp"
 #include "subsystemHeaders/poseControl.hpp"
 
